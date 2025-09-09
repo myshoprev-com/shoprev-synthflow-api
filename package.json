@@ -1,0 +1,19 @@
+{
+  "name": "shoprev-synthflow-api",
+  "version": "0.0.1",
+  "description": "An API to be used by Synthflow for Third-Party Integration",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myshoprev-com/shoprev-synthflow-api.git"
+  },
+  "author": "Jesstin Swadley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/myshoprev-com/shoprev-synthflow-api/issues"
+  },
+  "homepage": "https://github.com/myshoprev-com/shoprev-synthflow-api#readme"
+}
