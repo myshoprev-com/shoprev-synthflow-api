@@ -2,8 +2,11 @@
   "name": "shoprev-synthflow-api",
   "version": "0.0.1",
   "description": "An API to be used by Synthflow for Third-Party Integration",
+  "type": "module",
   "main": "app.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/myshoprev-com/shoprev-synthflow-api/issues"
   },
-  "homepage": "https://github.com/myshoprev-com/shoprev-synthflow-api#readme"
+  "homepage": "https://github.com/myshoprev-com/shoprev-synthflow-api#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
 }
