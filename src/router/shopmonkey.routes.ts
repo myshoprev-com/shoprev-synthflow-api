@@ -74,3 +74,22 @@ shopMonkeyRouter.post("/customer/email", async (req: Request, res: Response) => 
 		res.send(error);
 	}
 });
+
+shopMonkeyRouter.post("/tire-inventory", async (req: Request, res: Response) => {
+	try {
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const response = await axios.post("https://api.shopmonkey.cloud/v3/inventory_tire/search", axiosHeaderConfig);
+
+		res.send(response);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
