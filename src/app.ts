@@ -1,24 +1,18 @@
-import express, { type Express, type Request, type Response} from "express";
+import express, { type Express } from "express";
 
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
 
+// Express Config
+app.use(express.json());
+
+// Router
+import { shopMonkeyRouter } from "./router/shopmonkey.routes.js";
+import { healthRouter } from "./router/health.routes.js";
+
 // Routes
-app.post("/", (req: Request, res: Response) => {
-	res.status(200).send("POST request endpoint");
-});
-
-app.get("/", (req: Request, res: Response) => {
-	res.status(200).send("GET request endpoint");
-});
-
-app.patch("/", (req: Request, res: Response) => {
-	res.status(200).send("PATCH request endpoint");
-});
-
-app.delete("/", (req: Request, res: Response) => {
-	res.status(200).send("DELETE request endpoint");
-});
+app.use("/health", healthRouter);
+app.use("/shopmonkey", shopMonkeyRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server is running on Port: ${PORT}`)
