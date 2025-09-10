@@ -93,3 +93,24 @@ shopMonkeyRouter.post("/tire-inventory", async (req: Request, res: Response) => 
 		res.send(error);
 	}
 });
+
+shopMonkeyRouter.get("/list-appointments", async (req: Request, res: Response) => {
+	try {
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const response = await axios.get("https://api.shopmonkey.cloud/v3/appointment", axiosHeaderConfig);
+
+		const appointments = JSON.stringify(response);
+
+		res.send(appointments);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
