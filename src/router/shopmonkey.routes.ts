@@ -5,17 +5,51 @@ export const shopMonkeyRouter: Router = Router();
 
 const bearerToken = process.env.SHOPMONKEY_BEARER_TOKEN;
 
+// Auth Endpoints
+
 shopMonkeyRouter.get("/auth-test", async (req: Request, res: Response) => {
 	try {
-		const response = await axios.get("https://api.shopmonkey.cloud/v3/auth/apikey", {
+		const axiosHeaderConfig = {
 			headers: {
-				Authorization: 'Bearer ' + bearerToken
+				Authorization: 'Bearer ' + bearerToken,
 			}
-		});
+		}
+
+		const response = await axios.get("https://api.shopmonkey.cloud/v3/auth/apikey", axiosHeaderConfig);
 
 		const token = JSON.stringify(response.data.token);
 
 		res.send(token);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
+
+// Customer Endpoints
+
+shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
+	try {
+		const { appointmentName, appointmentColor, startAppointmentDate, endAppointmentDate,  } = req.body
+
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const shopMonkeyAppointment = {
+			name: appointmentName,
+			color: appointmentColor,
+			startDate: startAppointmentDate,
+			endDate: endAppointmentDate,
+		}
+
+		const response = await axios.post("https://api.shopmonkey.cloud/v3/appointment", shopMonkeyAppointment, axiosHeaderConfig);
+
+		res.send(response);
 	} catch (error) {
 		console.error(error);
 
@@ -75,6 +109,8 @@ shopMonkeyRouter.post("/customer/email", async (req: Request, res: Response) => 
 	}
 });
 
+// Inventory Endpoints
+
 shopMonkeyRouter.post("/tire-inventory", async (req: Request, res: Response) => {
 	try {
 		const axiosHeaderConfig = {
@@ -93,6 +129,8 @@ shopMonkeyRouter.post("/tire-inventory", async (req: Request, res: Response) => 
 		res.send(error);
 	}
 });
+
+// Appointment Endpoints
 
 shopMonkeyRouter.get("/list-appointments", async (req: Request, res: Response) => {
 	try {
