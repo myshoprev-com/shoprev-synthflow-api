@@ -31,7 +31,7 @@ shopMonkeyRouter.get("/auth-test", async (req: Request, res: Response) => {
 
 shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 	try {
-		const { appointmentName, appointmentColor, startAppointmentDate, endAppointmentDate,  } = req.body
+		const { customerFirstName, customerLastName, customerPhoneNumber, customerEmail } = req.body
 
 		const axiosHeaderConfig = {
 			headers: {
@@ -40,14 +40,22 @@ shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 			}
 		}
 
-		const shopMonkeyAppointment = {
-			name: appointmentName,
-			color: appointmentColor,
-			startDate: startAppointmentDate,
-			endDate: endAppointmentDate,
+		const shopMonkeyCustomer = {
+			firstName: customerFirstName,
+			lastName: customerLastName,
+			phoneNumbers: [
+				{
+					"number": customerPhoneNumber,
+				}
+			],
+			emails: [
+				{
+					"email": customerEmail
+				}
+			]
 		}
 
-		const response = await axios.post("https://api.shopmonkey.cloud/v3/appointment", shopMonkeyAppointment, axiosHeaderConfig);
+		const response = await axios.post("https://api.shopmonkey.cloud/v3/customer", shopMonkeyCustomer, axiosHeaderConfig);
 
 		res.send(response);
 	} catch (error) {
