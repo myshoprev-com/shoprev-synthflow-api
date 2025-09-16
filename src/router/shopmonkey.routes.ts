@@ -41,14 +41,14 @@ shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 		}
 
 		const shopMonkeyCustomer = {
-			firstName: customerFirstName,
-			lastName: customerLastName,
-			phoneNumbers: [
+			"firstName" : customerFirstName,
+			"lastName" : customerLastName,
+			"phoneNumbers" : [
 				{
 					"number": customerPhoneNumber,
 				}
 			],
-			emails: [
+			"emails" : [
 				{
 					"email": customerEmail
 				}
