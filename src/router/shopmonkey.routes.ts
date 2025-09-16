@@ -31,7 +31,7 @@ shopMonkeyRouter.get("/auth-test", async (req: Request, res: Response) => {
 
 shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 	try {
-		const { customerFirstName, customerLastName, customerPhoneNumber, customerEmail } = req.body
+		const { customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerType } = req.body
 
 		const axiosHeaderConfig = {
 			headers: {
@@ -43,9 +43,10 @@ shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 		const shopMonkeyCustomer = {
 			"firstName" : customerFirstName,
 			"lastName" : customerLastName,
+			"customerType": customerType,
 			"phoneNumbers" : [
 				{
-					"number": customerPhoneNumber,
+					"number": customerPhoneNumber
 				}
 			],
 			"emails" : [
