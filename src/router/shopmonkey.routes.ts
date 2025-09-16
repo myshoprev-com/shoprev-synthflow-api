@@ -118,6 +118,42 @@ shopMonkeyRouter.post("/customer/email", async (req: Request, res: Response) => 
 	}
 });
 
+shopMonkeyRouter.post("/customer/update", async (req: Request, res: Response) => {
+	try {
+		const { customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerId } = req.body
+
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const shopMonkeyCustomer = {
+			"firstName" : customerFirstName,
+			"lastName" : customerLastName,
+			"phoneNumbers" : [
+				{
+					"number": customerPhoneNumber
+				}
+			],
+			"emails" : [
+				{
+					"email": customerEmail
+				}
+			]
+		}
+
+		const response = await axios.put(`https://api.shopmonkey.cloud/v3/customer/${customerId}`, shopMonkeyCustomer, axiosHeaderConfig);
+
+		res.send(response.data);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
+
 // Inventory Endpoints
 
 shopMonkeyRouter.post("/tire-inventory", async (req: Request, res: Response) => {
