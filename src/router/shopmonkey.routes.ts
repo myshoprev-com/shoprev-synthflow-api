@@ -58,7 +58,7 @@ shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/customer", shopMonkeyCustomer, axiosHeaderConfig);
 
-		res.send(response);
+		res.send(response.data.id);
 	} catch (error) {
 		console.error(error);
 
