@@ -231,3 +231,30 @@ shopMonkeyRouter.get("/appointments/list", async (req: Request, res: Response) =
 		res.send(error);
 	}
 });
+
+shopMonkeyRouter.post("/appointments/update", async (req: Request, res: Response) => {
+	try {
+		const { appointmentId, appointmentName, appointmentStartDate, appointmentEndDate } = req.body;
+
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const shopMonkeyAppointment = {
+			"name": appointmentName,
+			"startDate": appointmentStartDate,
+			"endDate": appointmentEndDate
+		}
+
+		const response = await axios.put(`https://api.shopmonkey.cloud/v3/appointment/${appointmentId}`, shopMonkeyAppointment, axiosHeaderConfig);
+
+		res.send(response);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
