@@ -258,3 +258,28 @@ shopMonkeyRouter.post("/appointments/update", async (req: Request, res: Response
 		res.send(error);
 	}
 });
+
+shopMonkeyRouter.post("/appointments/cancel", async (req: Request, res: Response) => {
+	try {
+		const { appointmentId, appointmentCancellationNote } = req.body;
+
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const shopMonkeyAppointment = {
+			"cancellationNote": appointmentCancellationNote
+		}
+
+		const response = await axios.patch(`https://api.shopmonkey.cloud/v3/shared_appointment/${appointmentId}/cancel`, shopMonkeyAppointment, axiosHeaderConfig);
+
+		res.send(response.data);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
