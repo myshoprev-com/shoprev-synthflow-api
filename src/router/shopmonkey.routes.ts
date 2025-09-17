@@ -68,6 +68,8 @@ shopMonkeyRouter.post("/customer/new", async (req: Request, res: Response) => {
 
 shopMonkeyRouter.post("/customer/phone-number", async (req: Request, res: Response) => {
 	try {
+		const { customerPhoneNumber } = req.body;
+
 		const axiosHeaderConfig = {
 			headers: {
 				Authorization: 'Bearer ' + bearerToken,
@@ -78,7 +80,7 @@ shopMonkeyRouter.post("/customer/phone-number", async (req: Request, res: Respon
 		const shopMonkeyPhoneNumber = {
 			"phoneNumbers" : [
 				{
-					"number" : req.body.phoneNumber
+					"number" : customerPhoneNumber
 				}
 			]
 		}
@@ -95,6 +97,8 @@ shopMonkeyRouter.post("/customer/phone-number", async (req: Request, res: Respon
 
 shopMonkeyRouter.post("/customer/email", async (req: Request, res: Response) => {
 	try {
+		const { customerEmail } = req.body;
+
 		const axiosHeaderConfig = {
 			headers: {
 				Authorization: 'Bearer ' + bearerToken,
@@ -104,7 +108,9 @@ shopMonkeyRouter.post("/customer/email", async (req: Request, res: Response) => 
 
 		const shopMonkeyEmails = {
 			"emails" : [
-				req.body.email
+				{
+					"email": customerEmail
+				}
 			]
 		}
 
@@ -120,7 +126,7 @@ shopMonkeyRouter.post("/customer/email", async (req: Request, res: Response) => 
 
 shopMonkeyRouter.post("/customer/update", async (req: Request, res: Response) => {
 	try {
-		const { customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerId } = req.body
+		const { customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerId } = req.body;
 
 		const axiosHeaderConfig = {
 			headers: {
@@ -177,7 +183,35 @@ shopMonkeyRouter.post("/tire-inventory", async (req: Request, res: Response) => 
 
 // Appointment Endpoints
 
-shopMonkeyRouter.get("/list-appointments", async (req: Request, res: Response) => {
+shopMonkeyRouter.post("appointments/create", async (req: Request, res: Response) => {
+	try {
+		const { appointmentColor, appointmentName, appointmentStartDate, appointmentEndDate} = req.body;
+
+		const axiosHeaderConfig = {
+			headers: {
+				Authorization: 'Bearer ' + bearerToken,
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const shopMonkeyAppointment = {
+			"color": appointmentColor,
+			"name": appointmentName,
+			"startDate": appointmentStartDate,
+			"endDate": appointmentEndDate
+		}
+
+		const response = await axios.post("https://api.shopmonkey.cloud/v3/appointment", shopMonkeyAppointment, axiosHeaderConfig);
+
+		res.send(response.data);
+	} catch (error) {
+		console.error(error);
+
+		res.send(error);
+	}
+});
+
+shopMonkeyRouter.get("/appointments/list", async (req: Request, res: Response) => {
 	try {
 		const axiosHeaderConfig = {
 			headers: {
