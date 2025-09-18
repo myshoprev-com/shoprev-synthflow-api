@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { shopmonkeyAuthTestController, shopmonkeyCancelAppointmentController, shopmonkeyFindCustomerByPhoneNumberController, shopmonkeyListAppointmentsController, shopmonkeyNewAppointmentController, shopmonkeyNewCustomerController, shopmonkeyTireInvetoryController, shopmonkeyUpdateAppointmentController, shopmonkeyUpdateCustomerController } from "../controller/shopmonkey.controller.js";
+import { shopmonkeyAuthTestController, shopmonkeyCancelAppointmentController, shopmonkeyFindCustomerByPhoneNumberController, shopmonkeyListAppointmentsController, shopmonkeyNewAppointmentController, shopmonkeyNewCustomerController, shopmonkeyTireInvetoryController, shopmonkeyUpdateAppointmentController, shopmonkeyUpdateCustomerController } from "../../../controller/shopmonkey.controller.js";
 
 // Router
 export const shopMonkeyRouter: Router = Router();

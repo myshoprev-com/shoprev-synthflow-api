@@ -24,12 +24,10 @@ const app: Express = express();
 app.use(express.json());
 
 // Router
-import { shopMonkeyRouter } from "./router/shopmonkey.routes.js";
-import { healthRouter } from "./router/health.routes.js";
+import { apiV1Router } from "./router/v1/v1.routes.js";
 
 // Routes
-app.use("/health", healthRouter);
-app.use("/shopmonkey", shopMonkeyRouter);
+app.use("/v1", apiV1Router);
 
 // Setup HTTP & HTTPS Servers
 const httpServer = http.createServer(app);
