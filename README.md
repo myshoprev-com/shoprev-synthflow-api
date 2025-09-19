@@ -24,7 +24,7 @@ $ npm install
 $ npm run build
 
 # start the server
-$ SHOPMONKEY_BEARER_TOKEN=apiaccesskey SSL_CERT=/path/to/certificate SSL_KEY=/path/to/key HTTPS_PORT=PORT# HTTP_PORT=PORT# npm run start
+$ SHOPMONKEY_BEARER_TOKEN=apiaccesskey SSL_CERT=/path/to/certificate SSL_KEY=/path/to/key HTTPS_PORT=PORTNUM HTTP_PORT=PORTNUM npm run start
 ```
 
 ### API Routes & Usage
@@ -45,7 +45,7 @@ $ SHOPMONKEY_BEARER_TOKEN=apiaccesskey SSL_CERT=/path/to/certificate SSL_KEY=/pa
 
 ##### Example cURL
 > ```bash
-> curl -X POST -H "Content-Type: application/json" http://localhost:8000/v1/health/post
+> $ curl -X POST -H "Content-Type: application/json" http://localhost:8000/v1/health/post
 > ```
 </details>
 
@@ -67,7 +67,7 @@ $ SHOPMONKEY_BEARER_TOKEN=apiaccesskey SSL_CERT=/path/to/certificate SSL_KEY=/pa
 
 ##### Example cURL
 > ```bash
-> curl -X GET -H "Content-Type: application/json" http://localhost:8000/v1/health/get
+> $ curl -X GET -H "Content-Type: application/json" http://localhost:8000/v1/health/get
 > ```
 </details>
 
@@ -89,7 +89,7 @@ $ SHOPMONKEY_BEARER_TOKEN=apiaccesskey SSL_CERT=/path/to/certificate SSL_KEY=/pa
 
 ##### Example cURL
 > ```bash
-> curl -X PATCH -H "Content-Type: application/json" http://localhost:8000/v1/health/patch
+> $ curl -X PATCH -H "Content-Type: application/json" http://localhost:8000/v1/health/patch
 > ```
 </details>
 
@@ -111,18 +111,234 @@ $ SHOPMONKEY_BEARER_TOKEN=apiaccesskey SSL_CERT=/path/to/certificate SSL_KEY=/pa
 
 ##### Example cURL
 > ```bash
-> curl -X DELETE -H "Content-Type: application/json" http://localhost:8000/v1/health/delete
+> $ curl -X DELETE -H "Content-Type: application/json" http://localhost:8000/v1/health/delete
 > ```
 </details>
 
 ------------------------------------------------------------------------------------------
 #### Shopmonkey Auth Test Routes
+<details>
+	<summary>
+		<code>GET</code>
+		<code>
+			<b>/v1/shopmonkey/auth-test</b>
+		</code>
+		<code>(perform an auth test with shopmonkey's API and get the token back as a response)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `a8F3kL92mN6pQ1rS4tUv7wX0yZ5bC1dE`                                  |
+
+##### Example cURL
+> ```bash
+> $ curl -X GET -H "Content-Type: application/json" http://localhost:8000/v1/shopmonkey/auth-test
+> ```
+</details>
+
+------------------------------------------------------------------------------------------
 
 #### Shopmonkey Customer Routes
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/customer/new</b>
+		</code>
+		<code>(request to make a new customer inside of shopmonkey)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `b9G3lM03nO7qR2sT5uVw8xY1zA6cD2eF`                                  |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'customerFirstName=John&customerLastName=Doe&customerPhoneNumber=(555)123-4567&customerEmail=john@doe.com&customerType=Customer' http://localhost:8000/v1/shopmonkey/customer/new
+> ```
+</details>
+
+<br>
+
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/customer/phone-number</b>
+		</code>
+		<code>(request to find a customer inside of shopmonkey by their phone number)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'customerPhoneNumber=(555)123-4567' http://localhost:8000/v1/shopmonkey/customer/phone-number
+> ```
+</details>
+
+<br>
+
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/customer/email</b>
+		</code>
+		<code>(request to find a customer inside of shopmonkey by their email)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'customerEmail=john@doe.com' http://localhost:8000/v1/shopmonkey/customer/email
+> ```
+</details>
+
+<br>
+
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/customer/update</b>
+		</code>
+		<code>(request to update a customer inside of shopmonkey by their id)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `b9G3lM03nO7qR2sT5uVw8xY1zA6cD2eF`                                  |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'customerFirstName=John&customerLastName=Doe&customerPhoneNumber=(555)123-4567&customerEmail=john@doe.com&customerType=Customer&customerId=c0H4lM03nO7qR3tU6vWY8xY1zB7dE3fG' http://localhost:8000/v1/shopmonkey/customer/update
+> ```
+</details>
+
+------------------------------------------------------------------------------------------
 
 #### Shopmonkey Inventory Routes
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/tire-inventory</b>
+		</code>
+		<code>(request to list all canned servires for tires from shopmonkey)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X GET -H "Content-Type: application/json" http://localhost:8000/v1/shopmonkey/tire-inventory
+> ```
+</details>
+
+------------------------------------------------------------------------------------------
 
 #### Shopmonkey Appointment Routes
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/appointment/create</b>
+		</code>
+		<code>(request to find a customer inside of shopmonkey by their email)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'appointmentColor=Blue&appointmentName=SomeAppointmentName&appointmentStartDate01/01/2000&appointmentEndDate=01/02/2000' http://localhost:8000/v1/shopmonkey/appointment/create
+> ```
+</details>
+
+<br>
+
+<details>
+	<summary>
+		<code>GET</code>
+		<code>
+			<b>/v1/shopmonkey/appointment/list</b>
+		</code>
+		<code>(request to find a customer inside of shopmonkey by their email)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X GET -H "Content-Type: application/json" http://localhost:8000/v1/shopmonkey/appointment/list
+> ```
+</details>
+
+<br>
+
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/appointment/update</b>
+		</code>
+		<code>(request to find a customer inside of shopmonkey by their email)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'appointmentId=ai48ZHoT8nMY4&appointmentName=SomeAppointmentName&appointmentStartDate01/01/2000&appointmentEndDate=01/02/2000' http://localhost:8000/v1/shopmonkey/appointment/update
+> ```
+</details>
+
+<br>
+
+<details>
+	<summary>
+		<code>POST</code>
+		<code>
+			<b>/v1/shopmonkey/appointment/cancel</b>
+		</code>
+		<code>(request to find a customer inside of shopmonkey by their email)</code>
+	</summary>
+
+##### Responses
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `text/html;charset=utf-8`         | `{ data: [{ ..., ..., ..., ... }]}`                                 |
+
+##### Example cURL
+> ```bash
+> $ curl -X POST -H "Content-Type: application/json" -d 'appointmentId=ai48ZHoT8nMY4&appointmentCancellationNote=SomeReasonForCancellation' http://localhost:8000/v1/shopmonkey/appointment/cancel
+> ```
+</details>
+
+------------------------------------------------------------------------------------------
 
 ## Contributors
 - [Jesstin Swadley](https://github.com/JesstinSwadley)
