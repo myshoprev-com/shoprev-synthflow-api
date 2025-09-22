@@ -1,5 +1,6 @@
 import { type Request, type Response } from "express";
 import axios from "axios";
+import { logger } from "../../../app.js";
 
 const bearerToken = process.env.SHOPMONKEY_BEARER_TOKEN;
 
@@ -24,6 +25,8 @@ export const shopmonkeyNewAppointmentController = async (req: Request, res: Resp
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/appointment", shopMonkeyAppointment, axiosHeaderConfig);
 
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
+
 		res.send(response.data);
 	} catch (error) {
 		console.error(error);
@@ -42,6 +45,8 @@ export const shopmonkeyListAppointmentsController =  async (req: Request, res: R
 		}
 
 		const response = await axios.get("https://api.shopmonkey.cloud/v3/appointment", axiosHeaderConfig);
+
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		const appointments = JSON.stringify(response);
 
@@ -72,6 +77,8 @@ export const shopmonkeyUpdateAppointmentController = async (req: Request, res: R
 
 		const response = await axios.put(`https://api.shopmonkey.cloud/v3/appointment/${appointmentId}`, shopMonkeyAppointment, axiosHeaderConfig);
 
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
+
 		res.send(response);
 	} catch (error) {
 		console.error(error);
@@ -96,6 +103,8 @@ export const shopmonkeyCancelAppointmentController = async (req: Request, res: R
 		}
 
 		const response = await axios.patch(`https://api.shopmonkey.cloud/v3/shared_appointment/${appointmentId}/cancel`, shopMonkeyAppointment, axiosHeaderConfig);
+
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data);
 	} catch (error) {

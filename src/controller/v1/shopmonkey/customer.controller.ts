@@ -1,5 +1,6 @@
 import { type Request, type Response } from "express";
 import axios from "axios";
+import { logger } from "../../../app.js";
 
 const bearerToken = process.env.SHOPMONKEY_BEARER_TOKEN;
 
@@ -33,6 +34,8 @@ export const shopmonkeyNewCustomerController = async (req: Request, res: Respons
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/customer", shopMonkeyCustomer, axiosHeaderConfig);
 
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
+
 		res.send(response.data.id);
 	} catch (error) {
 		console.error(error);
@@ -62,6 +65,8 @@ export const shopmonkeyFindCustomerByPhoneNumberController = async (req: Request
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/customer/phone_number/search", shopMonkeyPhoneNumber, axiosHeaderConfig);
 
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
+
 		res.send(response.data.data);
 	} catch (error) {
 		console.error(error);
@@ -90,6 +95,8 @@ export const shopmonkeyFindCustomerByEmailController = async (req: Request, res:
 		}
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/customer/email/search", shopMonkeyEmails, axiosHeaderConfig);
+
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data.data);
 	} catch (error) {
@@ -126,6 +133,8 @@ export const shopmonkeyUpdateCustomerController = async (req: Request, res: Resp
 		}
 
 		const response = await axios.put(`https://api.shopmonkey.cloud/v3/customer/${customerId}`, shopMonkeyCustomer, axiosHeaderConfig);
+
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data);
 	} catch (error) {

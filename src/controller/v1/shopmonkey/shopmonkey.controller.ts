@@ -1,5 +1,6 @@
 import { type Request, type Response } from "express";
 import axios from "axios";
+import { logger } from "../../../app.js";
 
 const bearerToken = process.env.SHOPMONKEY_BEARER_TOKEN;
 
@@ -16,11 +17,15 @@ export const shopmonkeyAuthTestController = async (req: Request, res: Response) 
 
 		const token = JSON.stringify(response.data.token);
 
-		res.send(token);
-	} catch (error) {
-		console.error(error);
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
-		res.send(error);
+		res.send(token);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
+
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -35,6 +40,8 @@ export const shopmonkeyTireInvetoryController = async (req: Request, res: Respon
 		}
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/inventory_tire/search", axiosHeaderConfig);
+		
+		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response);
 	} catch (error) {

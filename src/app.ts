@@ -2,6 +2,8 @@ import express, { type Express } from "express";
 import http from "http";
 import https from "https";
 import fs from "fs";
+import winston from "winston";
+import morgan from "morgan";
 
 // HTTP & HTTPS Ports
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
@@ -19,9 +21,31 @@ const credentials = {
 	cert: certificate
 }
 
+// Winston
+const { combine, timestamp, json, prettyPrint } = winston.format;
+
+export const logger = winston.createLogger({
+	format: combine(timestamp(), json(), prettyPrint()),
+	transports: [
+		new winston.transports.Console()
+	],
+});
+
+// Morgan 
+const morganMiddleware = morgan(
+	JSON.stringify({
+		"client-ip": ":remote-addr",
+		"method": ":method",
+		"url": ":url",
+		"status": ":status",
+		"response-time": ":response-time ms"
+	})
+);
+
 // Express Config
 const app: Express = express();
 app.use(express.json());
+app.use(morganMiddleware);
 
 // Router
 import { apiV1Router } from "./router/v1/v1.routes.js";
@@ -35,9 +59,9 @@ const httpsServer = https.createServer(credentials, app);
 
 // Run HTTPS & HTTPS Servers
 httpServer.listen(HTTP_PORT, () => {
-	console.log(`Server is running on Port: ${HTTP_PORT}`);
+	logger.info(`Server is running on Port: ${HTTP_PORT}`);
 });
 
 httpsServer.listen(HTTPS_PORT, () => {
-	console.log(`Server is running on Port: ${HTTPS_PORT}`);
+	logger.info(`Server is running on Port: ${HTTPS_PORT}`);
 });
