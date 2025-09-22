@@ -1,6 +1,6 @@
 {
   "name": "shoprev-synthflow-api",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "An API to be used by Synthflow for Third-Party Integration",
   "type": "module",
   "main": "app.js",
