@@ -37,10 +37,12 @@ export const shopmonkeyNewCustomerController = async (req: Request, res: Respons
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data.id);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -68,10 +70,12 @@ export const shopmonkeyFindCustomerByPhoneNumberController = async (req: Request
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data.data);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -99,10 +103,12 @@ export const shopmonkeyFindCustomerByEmailController = async (req: Request, res:
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data.data);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -137,9 +143,11 @@ export const shopmonkeyUpdateCustomerController = async (req: Request, res: Resp
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }

@@ -28,10 +28,12 @@ export const shopmonkeyNewAppointmentController = async (req: Request, res: Resp
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -51,10 +53,12 @@ export const shopmonkeyListAppointmentsController =  async (req: Request, res: R
 		const appointments = JSON.stringify(response);
 
 		res.send(appointments);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -80,10 +84,12 @@ export const shopmonkeyUpdateAppointmentController = async (req: Request, res: R
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
 
@@ -107,9 +113,11 @@ export const shopmonkeyCancelAppointmentController = async (req: Request, res: R
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
 		res.send(response.data);
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		if (error.name = "AxiosError") {
+			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
+		}
 
-		res.send(error);
+		res.status(400).send(`${error.name} for ${req.url}`);
 	}
 }
