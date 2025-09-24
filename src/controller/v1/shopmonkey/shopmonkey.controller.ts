@@ -35,15 +35,16 @@ export const shopmonkeyTireInvetoryController = async (req: Request, res: Respon
 		const axiosHeaderConfig = {
 			headers: {
 				Authorization: 'Bearer ' + bearerToken,
-				'Content-Type': 'application/json'
 			}
 		}
 
-		const response = await axios.post("https://api.shopmonkey.cloud/v3/inventory_tire/search", axiosHeaderConfig);
+		const response = await axios.get("https://api.shopmonkey.cloud/v3/inventory_tire", axiosHeaderConfig);
+
+		const shopMonkeyServiceList = response.data.data;
 		
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
-		res.send(response);
+		res.send(shopMonkeyServiceList);
 	} catch (error: any) {
 		if (error.name = "AxiosError") {
 			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);

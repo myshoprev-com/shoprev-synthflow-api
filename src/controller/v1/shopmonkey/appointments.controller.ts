@@ -50,9 +50,9 @@ export const shopmonkeyListAppointmentsController =  async (req: Request, res: R
 
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
-		const appointments = JSON.stringify(response);
+		const shopmonkeyAppointments = response.data.data;
 
-		res.send(appointments);
+		res.send(shopmonkeyAppointments);
 	} catch (error: any) {
 		if (error.name = "AxiosError") {
 			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
@@ -83,7 +83,9 @@ export const shopmonkeyUpdateAppointmentController = async (req: Request, res: R
 
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
-		res.send(response);
+		const updatedShopmonkeyAppointment = response.data.data;
+
+		res.send(updatedShopmonkeyAppointment);
 	} catch (error: any) {
 		if (error.name = "AxiosError") {
 			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);

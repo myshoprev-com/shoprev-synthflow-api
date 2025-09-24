@@ -36,7 +36,14 @@ export const shopmonkeyNewCustomerController = async (req: Request, res: Respons
 
 		logger.info(`Axios ${response.config.method} request to ${response.config.url} was successful`);
 
-		res.send(response.data.id);
+		const newShopmonkeyCustomer = {
+			id: response.data.data.id,
+			firstName: response.data.data.firstName,
+			lastName: response.data.data.lastName,
+			publicId: response.data.data.publicId
+		}
+
+		res.status(201).send(newShopmonkeyCustomer);
 	} catch (error: any) {
 		if (error.name = "AxiosError") {
 			logger.error(`${error.name} from ${error.config.url} got ${error.response.data.message}`);
@@ -92,9 +99,7 @@ export const shopmonkeyFindCustomerByEmailController = async (req: Request, res:
 
 		const shopMonkeyEmails = {
 			"emails" : [
-				{
-					"email": customerEmail
-				}
+				customerEmail
 			]
 		}
 
