@@ -22,14 +22,17 @@ export const shopmonkeyNewCustomerController = async (req: Request, res: Respons
 			"customerType": customerType,
 			"phoneNumbers" : [
 				{
-					"number": customerPhoneNumber
+					"number" : customerPhoneNumber
 				}
 			],
 			"emails" : [
 				{
-					"email": customerEmail
+					"email" : customerEmail
 				}
-			]
+			],
+			"customFields": {
+				"source" : "Shoprev AI Voice Agent"
+			}
 		}
 
 		const response = await axios.post("https://api.shopmonkey.cloud/v3/customer", shopMonkeyCustomer, axiosHeaderConfig);
@@ -140,7 +143,10 @@ export const shopmonkeyUpdateCustomerController = async (req: Request, res: Resp
 				{
 					"email": customerEmail
 				}
-			]
+			],
+			"customFields": {
+				"source" : "Shoprev AI Voice Agent"
+			}
 		}
 
 		const response = await axios.put(`https://api.shopmonkey.cloud/v3/customer/${customerId}`, shopMonkeyCustomer, axiosHeaderConfig);
